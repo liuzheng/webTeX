@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+        <h1>{{ Wcompany }}</h1>
+    <p>{{ ERROR }}</p>
+    <a href={{ url }}>Click Me!!!</a>
+    <form action="." method="get">
+        <input type="text" name="code">
+        <input type="text" name="q" value={{ q }} style="display:none;">
+        <input class="btn btn-success btn-xs" type="submit" value="CODE">
+    </form>
+    <br />
+    <img src="/img/code.png" />
+{% endblock %}

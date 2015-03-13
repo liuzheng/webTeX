@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}The current time{% endblock %}
+
+{% block content %}
+<h1>api list</h1>
+<table>
+  <thead>
+    <td>API</td>
+    <td>Explam</td>
+  </thead>
+  <tbody>
+    <tr>
+      <td>api/list</td>
+      <td>Get the user list for all data, the cache will saved at /tmp/webWeiboList.pkl<td>
+    </tr>
+    <tr>
+      <td>api/weibo</td>
+      <td>Get the sina weibo data from the HBase, and only show 100<td>
+    </tr>
+    <tr>
+      <td>api/tweibo</td>
+      <td>Get the tencent weibo data from the HBase, and only show 100<td>
+    </tr>
+    <tr>
+      <td>api/crontab</td>
+      <td>switch the crontab status , input q diside if turn on or turn off<td>
+    </tr>
+    <tr>
+      <td>api/hbasethrift</td>
+      <td>same as crontab api , but it is for HBase Thrift<td>
+    </tr>
+    <tr>
+      <td>api/hadoop</td>
+      <td>same as crontab api , but it is for Hadoop<td>
+    </tr>
+    <tr>
+      <td>api/hbase</td>
+      <td>same as crontab api , but it is for HBase<td>
+    </tr>
+    <tr>
+      <td>api/server</td>
+      <td>this is to get the server's status , include Hadoop,HBase,HBase Thrift,Cron jobs<td>
+    </tr>
+    <tr>
+      <td>api/gitpull</td>
+      <td>just update the site/system with git pull<td>
+    </tr>
+    <tr>
+      <td>api/key</td>
+      <td>this is for user add API Keys,input type you can see in the form , I think it's easy to understand<td>
+    </tr>
+    <tr>
+      <td>api/appkeys</td>
+      <td>return the all appkeys with json code<td>
+    </tr>
+    <tr>
+      <td>api/delkey</td>
+      <td>delete a appkey just want the keyID<td>
+    </tr>
+    <tr>
+      <td>api/tpl</td>
+      <td>show the tencent weibo public_timeline,return a json data<td>
+    </tr>
+    <tr>
+      <td>api/</td>
+      <td><td>
+    </tr>
+    <tr>
+      <td>api/</td>
+      <td><td>
+    </tr>
+    <tr>
+      <td>api/</td>
+      <td><td>
+    </tr>
+  </tbody>
+</table>
+
+{% endblock %}
