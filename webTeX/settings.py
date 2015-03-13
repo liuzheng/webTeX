@@ -47,7 +47,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
+    #'django.middleware.security.SecurityMiddleware', #ImportError: No module named security. BUG ... dont know, ignore by liuzheng
 )
 
 ROOT_URLCONF = 'webTeX.urls'
