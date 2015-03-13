@@ -1,3 +1,6 @@
+#! /usr/bin/env python
+# -*- coding:utf-8 -*- #
+__author__ = 'liuzheng'
 """
 WSGI config for webTeX project.
 
