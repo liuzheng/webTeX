@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
@@ -34,7 +35,7 @@ TEMPLATE_DIRS = (
 
 ALLOWED_HOSTS = []
 ADMINS = (
-        ('LZ','bug@ilz.me'),
+    ('LZ', 'bug@ilz.me'),
 )
 
 # Application definition
@@ -58,7 +59,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #'django.middleware.security.SecurityMiddleware', #ImportError: No module named security. BUG ... dont know, ignore by liuzheng
+    # 'django.middleware.security.SecurityMiddleware', #ImportError: No module named security. BUG ... dont know, ignore by liuzheng
 )
 
 ROOT_URLCONF = 'webTeX.urls'
@@ -96,7 +97,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR,  'templates'),
+    os.path.join(BASE_DIR, 'templates'),
 )
 CRONJOBS = [
     # ('*/1 * * * *', 'tex.crontab.crontab'),

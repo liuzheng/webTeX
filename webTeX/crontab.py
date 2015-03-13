@@ -7,6 +7,7 @@ __author__ = 'liuzheng'
 import os
 import sys
 from django.db import connection
+
 cursor = connection.cursor()
 # HADOOP_MASTER = cursor.execute('select HADOOP_MASTER from api_info').fetchall()
 # HADOOP_MASTER = '127.0.0.1'
@@ -20,7 +21,6 @@ try:
     import cPickle as pkl
 except:
     import pickle as pkl
-
 
 
 def something():
