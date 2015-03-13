@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -24,8 +25,17 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+TEMPLATE_DIRS = (
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(os.path.dirname(__file__), '../templates').replace('\\', '/'),
+)
 
+ALLOWED_HOSTS = []
+ADMINS = (
+        ('LZ','bug@ilz.me'),
+)
 
 # Application definition
 
@@ -36,6 +46,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_crontab',
     'tex',
 )
 
@@ -68,9 +79,9 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-CN'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -87,3 +98,7 @@ STATIC_URL = '/static/'
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR,  'templates'),
 )
+CRONJOBS = [
+    # ('*/1 * * * *', 'tex.crontab.crontab'),
+]
+CRONTAB_DJANGO_MANAGE_PATH = os.path.join(PROJECT_ROOT, '', 'manage.py')
