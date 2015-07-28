@@ -43,6 +43,7 @@
 {% block footer %}
     <hr>
     <p>Thanks for visiting my site.</p>
+    {% csrf_token %}
 {% endblock %}
 {% block info %}
     {{ info }}
