@@ -12,7 +12,9 @@ urlpatterns = patterns('tex.views',
                        # url(r'^$', 'webTeX.views.home', name='home'),
                        # url(r'^blog/', include('blog.urls')),
                        ('^$', 'index'),
+                       ('^regis$', 'UserAddPage'),
                        ('^post/texfile$', 'MakeTexFile'),
+                       ('^post/regis$', 'UserAdd'),
 )+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += patterns('',
