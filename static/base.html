@@ -3,11 +3,12 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>TeX在线编辑系统</title>
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/css/dashboard.css"/>
-    <script src="/js/lib/jquery.min.js"></script>
-    <script src="/js/lib/bootstrap.min.js"></script>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href='{% static "css/bootstrap.min.css" %}'/>
+    <link rel="stylesheet" type="text/css" href='{% static "css/bootstrap-theme.min.css" %}'/>
+    <link rel="stylesheet" type="text/css" href='{% static "css/dashboard.css" %}'/>
+    <script src='{% static "js/jquery-2.1.4.min.js" %}'></script>
+    <script src='{% static "js/bootstrap.min.js" %}'></script>
 </head>
 <body class="container">
 {% block cssjs %}{% endblock %}
@@ -23,14 +24,14 @@
             </button>
             <a class="navbar-brand" href="/">系统主页</a>
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li {{ gatherer }}><a href="/gatherer">爬取</a></li>
-                <li {{ storage }}><a href="/storage">存储</a></li>
-                <li {{ analize }}><a href="/analize">分析</a></li>
-                <li {{ about }}><a href="/about">关于</a></li>
-            </ul>
-        </div>
+{#        <div id="navbar" class="collapse navbar-collapse">#}
+{#            <ul class="nav navbar-nav">#}
+{#                <li {{ gatherer }}><a href="/gatherer">爬取</a></li>#}
+{#                <li {{ storage }}><a href="/storage">存储</a></li>#}
+{#                <li {{ analize }}><a href="/analize">分析</a></li>#}
+{#                <li {{ about }}><a href="/about">关于</a></li>#}
+{#            </ul>#}
+{#        </div>#}
         <!--/.nav-collapse -->
     </div>
 </nav>

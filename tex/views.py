@@ -13,13 +13,6 @@ import sys
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, parentdir)
 
-from django.db import connection
-
-cursor = connection.cursor()
-# HADOOP_MASTER = cursor.execute('select HADOOP_MASTER from api_info').fetchall()
-# HADOOP_MASTER = '127.0.0.1'
-
-
 # Create your views here.
 
 def index(request):

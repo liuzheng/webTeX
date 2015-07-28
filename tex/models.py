@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class weibo(models.Model):
+class user(models.Model):
     APP_KEY = models.CharField(max_length=15, primary_key=True)
     NAME = models.CharField(max_length=20)
     APP_SECRET = models.CharField(max_length=32)

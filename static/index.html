@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block cssjs %}
+        {% load staticfiles %}
+
+    <script src='{% static "js/angular.min.js" %}'></script>
+    {#    <script src="/js/app.js"></script>#}
+{% endblock %}
+{% block title %}The current time{% endblock %}
+
+{% block content %}
+    <div class="container" ng-app="app" ng-controller="Ctrl">
+
+    </div>
+    <script>
+        var app = angular.module('app', []);
+        app.controller('Ctrl', function ($scope, $http) {
+
+        });
+        {#        document.getElementById('crontab').checked#}
+    </script>
+{% endblock %}
