@@ -3,17 +3,57 @@
         {% load staticfiles %}
 
     <script src='{% static "js/angular.min.js" %}'></script>
+    <script type="text/javascript" src='{% static "js/ace/ace.js" %}'></script>
+    <script type="text/javascript" src='{% static "js/ace/ext-language_tools.js" %}'></script>
+<script type="text/javascript" src='{% static "js/ui-ace.js" %}'></script>
+<style>
+ .ace_editor {
+		border: 1px solid lightgray;
+		margin: auto;
+		height: 200px;
+		width: 80%;
+	}
+	.scrollmargin {
+		height: 80px;
+        text-align: center;
+	}
+</style>
     {#    <script src="/js/app.js"></script>#}
 {% endblock %}
 {% block title %}The current time{% endblock %}
 
 {% block content %}
     <div class="container" ng-app="app" ng-controller="Ctrl">
-
+    <div style="height:400px;">
+        <div id="editor" style="height: 100%"></div>
+    </div>
     </div>
     <script>
-        var app = angular.module('app', []);
+        var app = angular.module('app', ['ui.ace']);
         app.controller('Ctrl', function ($scope, $http) {
+            ace.require("ace/ext/language_tools");
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/twilight");
+            editor.getSession().setMode("ace/mode/latex");
+            editor.getSession().setUseWrapMode(true);
+            editor.getSession().setTabSize(4);
+            editor.setAutoScrollEditorIntoView(true);
+            editor.setOptions({
+                enableBasicAutocompletion: true,
+                enableSnippets: true,
+                enableLiveAutocompletion: false
+            });
+            // add command to lazy-load keybinding_menu extension
+            {#    editor.commands.addCommand({#}
+            {#        name: "showKeyboardShortcuts",#}
+{#        bindKey: {win: "Ctrl-Alt-h", mac: "Command-Alt-h"},#}
+{#        exec: function (editor) {#}
+{#            ace.config.loadModule("ace/ext/keybinding_menu", function (module) {#}
+{#                module.init(editor);#}
+{#            })#}
+{#        }#}
+{#    });#}
+{#    editor.execCommand("showKeyboardShortcuts");#}
 
         });
         {#        document.getElementById('crontab').checked#}
