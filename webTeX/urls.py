@@ -15,12 +15,13 @@ urlpatterns = patterns('tex.views',
                        ('^regis$', 'UserAddPage'),
                        ('^post/texfile$', 'MakeTexFile'),
                        ('^post/regis$', 'UserAdd'),
-)+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
+                       ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += patterns('',
                         # Examples:
                         # url(r'^$', 'weibo.views.home', name='home'),
                         # url(r'^blog/', include('blog.urls')),
                         url(r'^admin/', include(admin.site.urls)),
+                        url(r'^login$', 'django.contrib.auth.views.login'),
+                        url(r'^logout$', 'django.contrib.auth.views.logout'),
                         # (r'^api/', include('api.urls')),
-)
+                        )

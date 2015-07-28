@@ -15,16 +15,29 @@ import simplejson
 import time
 from django.contrib.auth import logout, login
 from django.contrib.auth.models import User
+from django.contrib import auth
 
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, parentdir)
 
 
 # Create your views here.
-
 def index(request):
-    return render_to_response('index.html')
-
+    if request.method=='GET':
+        if request.user.is_authenticated():
+            return render_to_response('index.html')
+        else:
+            return render_to_response('registration/login.html')
+    elif request.method=='POST':
+        post = simplejson.loads(request.body)
+        username = post.get('username', '')
+        password = post.get('password', '')
+        user = auth.authenticate(username=username, password=password)
+        if user is not None and user.is_active:
+            auth.login(request, user)
+            return HttpResponse('1')
+        else:
+            return HttpResponse('0')
 
 # @csrf_exempt
 def MakeTexFile(request):
