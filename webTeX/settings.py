@@ -100,4 +100,5 @@ STATICFILES_DIRS = (
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+TEMPLATE =os.path.join(BASE_DIR, 'template')
 CRONTAB_DJANGO_MANAGE_PATH = os.path.join(PROJECT_ROOT, '', 'manage.py')

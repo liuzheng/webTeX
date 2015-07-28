@@ -24,12 +24,19 @@
 
 {% block content %}
     <div class="container" ng-app="app" ng-controller="Ctrl">
+{% csrf_token %}
+    <button class="btn btn-info" ng-click="push()">Make LaTeX</button>
     <div style="height:400px;">
         <div id="editor" style="height: 100%"></div>
     </div>
     </div>
     <script>
         var app = angular.module('app', ['ui.ace']);
+        app.config(['$httpProvider', function ($httpProvider) {
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+    $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+}]);
         app.controller('Ctrl', function ($scope, $http) {
             ace.require("ace/ext/language_tools");
             var editor = ace.edit("editor");
@@ -43,6 +50,18 @@
                 enableSnippets: true,
                 enableLiveAutocompletion: true
             });
+            $scope.push = function () {
+                $http({
+                    url: "/post/texfile",
+                    method: 'POST',
+                    {#                headers: {#}
+                    {#                    "Authorization": Data.token()#}
+                    {#                },#}
+                    data: {"texfile": editor.getValue()}
+                }).success(function (data) {
+                    console.log(data)
+                })
+            };
             // add command to lazy-load keybinding_menu extension
             {#    editor.commands.addCommand({#}
             {#        name: "showKeyboardShortcuts",#}
