@@ -36,7 +36,7 @@ def index(request):
                 Names.append(i['Names'][0][1:])
             if str(request.user) not in Names:
                 DockerClient.create_container(image="liuzheng712/texlive:2014", stdin_open=True, tty=True,
-                                              volumes=['/data'],
+                                              volumes=[os.path.join(TEMPLATE, str(request.user))],
                                               name=str(request.user))
                 DockerClient.start(str(request.user),
                                    binds={'/data': {'bind': os.path.join(TEMPLATE, str(request.user)), 'rw': False}})
@@ -67,7 +67,7 @@ def MakeTexFile(request):
         ff.write(post.get('texfile', None).encode('utf8'))
         ff.close()
         s = DockerClient.exec_create(str(request.user),
-                                     'cd /data && latex ' + + csrfmiddlewaretoken + '-' + timestamp + '.tex',
+                                     'cd /data && latex ' + csrfmiddlewaretoken + '-' + timestamp + '.tex',
                                      stdout=True, stderr=True, tty=True)
         d = DockerClient.exec_start(s['Id'])
         print d
