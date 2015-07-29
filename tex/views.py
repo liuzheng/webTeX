@@ -33,8 +33,8 @@ def index(request):
             try:
                 DockerClient.create_container(image="liuzheng712/texlive:2014", stdin_open=True, tty=True,
                                               volumes=['/data'],
-                                              name=request.user)
-                DockerClient.start(container=request.user,
+                                              name=str(request.user))
+                DockerClient.start(str(request.user),
                                    binds={'/data': {'bind': os.path.join(TEMPLATE, request.user), 'rw': False}})
             except:
                 pass
@@ -60,10 +60,11 @@ def MakeTexFile(request):
     csrfmiddlewaretoken = request.COOKIES.get('csrftoken', None)
     timestamp = str(int(time.mktime(time.localtime())))
     if post.get('texfile', False):
-        ff = open(os.path.join(TEMPLATE, request.user, csrfmiddlewaretoken + '-' + timestamp + '.tex'), 'w')
+        print request.user,str(request.user)
+        ff = open(os.path.join(TEMPLATE, str(request.user), csrfmiddlewaretoken + '-' + timestamp + '.tex'), 'w')
         ff.write(post.get('texfile', None).encode('utf8'))
         ff.close()
-        s = DockerClient.exec_create(request.user,
+        s = DockerClient.exec_create(str(request.user),
                                      'cd /data && latex ' + + csrfmiddlewaretoken + '-' + timestamp + '.tex',
                                      stdout=True, stderr=True, tty=True)
         d = DockerClient.exec_start(s['Id'])
