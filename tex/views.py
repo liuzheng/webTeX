@@ -63,11 +63,10 @@ def MakeTexFile(request):
     csrfmiddlewaretoken = request.COOKIES.get('csrftoken', None)
     timestamp = str(int(time.mktime(time.localtime())))
     if post.get('texfile', False):
-        print request.user,str(request.user)
         ff = open(os.path.join(TEMPLATE, str(request.user), csrfmiddlewaretoken + '-' + timestamp + '.tex'), 'w')
         ff.write(post.get('texfile', None).encode('utf8'))
         ff.close()
-        s = DockerClient.exec_create(DockerContainer.objects.filter(UserName=str(request.user)),
+        s = DockerClient.exec_create(DockerContainer.objects.filter(UserName=str(request.user)).first().ContainerID,
                                      'cd /data && latex ' + + csrfmiddlewaretoken + '-' + timestamp + '.tex',
                                      stdout=True, stderr=True, tty=True)
         d = DockerClient.exec_start(s['Id'])
