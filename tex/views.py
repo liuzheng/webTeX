@@ -30,11 +30,14 @@ def index(request):
     if request.method == 'GET':
         print request.user
         if request.user.is_authenticated():
-            DockerClient.create_container(image="liuzheng712/texlive:2014", stdin_open=True, tty=True,
-                                          volumes=['/data'],
-                                          name=request.user)
-            DockerClient.start(container=request.user,
-                               binds={'/data': {'bind': os.path.join(TEMPLATE, request.user), 'rw': False}})
+            try:
+                DockerClient.create_container(image="liuzheng712/texlive:2014", stdin_open=True, tty=True,
+                                              volumes=['/data'],
+                                              name=request.user)
+                DockerClient.start(container=request.user,
+                                   binds={'/data': {'bind': os.path.join(TEMPLATE, request.user), 'rw': False}})
+            except:
+                pass
             return render_to_response('index.html', {'user': request.user})
         else:
             return render_to_response('registration/login.html', {'user': request.user})
