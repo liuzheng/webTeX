@@ -37,6 +37,7 @@ def index(request):
             if str(request.user) not in Names:
                 DockerClient.create_container(image="liuzheng712/texlive:2014", stdin_open=True, tty=True,
                                               volumes=[os.path.join(TEMPLATE, str(request.user))],
+                                              command="/bin/bash",
                                               name=str(request.user))
                 DockerClient.start(str(request.user),
                                    binds={'/data': {'bind': os.path.join(TEMPLATE, str(request.user)), 'rw': False}})
