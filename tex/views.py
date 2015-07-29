@@ -33,7 +33,7 @@ def index(request):
             containers = DockerClient.containers()
             Names =[]
             for i in containers:
-                Names.append(i['Names'][0])
+                Names.append(i['Names'][0][1:])
             if str(request.user) not in Names:
                 DockerClient.create_container(image="liuzheng712/texlive:2014", stdin_open=True, tty=True,
                                               volumes=['/data'],
