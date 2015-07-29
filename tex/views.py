@@ -30,15 +30,16 @@ def index(request):
     if request.method == 'GET':
         print request.user
         if request.user.is_authenticated():
-            try:
+            containers = DockerClient.containers()
+            Names =[]
+            for i in containers:
+                Names.append(i['Names'][0])
+            if str(request.user) not in Names:
                 DockerClient.create_container(image="liuzheng712/texlive:2014", stdin_open=True, tty=True,
                                               volumes=['/data'],
                                               name=str(request.user))
-                id = DockerClient.start(str(request.user),
+                DockerClient.start(str(request.user),
                                    binds={'/data': {'bind': os.path.join(TEMPLATE, request.user), 'rw': False}})
-                request.user.dockerID=id['Id']
-            except:
-                pass
             return render_to_response('index.html', {'user': request.user})
         else:
             return render_to_response('registration/login.html', {'user': request.user})
@@ -65,7 +66,7 @@ def MakeTexFile(request):
         ff = open(os.path.join(TEMPLATE, str(request.user), csrfmiddlewaretoken + '-' + timestamp + '.tex'), 'w')
         ff.write(post.get('texfile', None).encode('utf8'))
         ff.close()
-        s = DockerClient.exec_create(request.user.dockerID,
+        s = DockerClient.exec_create(str(request.user),
                                      'cd /data && latex ' + + csrfmiddlewaretoken + '-' + timestamp + '.tex',
                                      stdout=True, stderr=True, tty=True)
         d = DockerClient.exec_start(s['Id'])
