@@ -38,9 +38,9 @@ def index(request):
                 DockerClient.create_container(image="liuzheng712/texlive:2014", stdin_open=True, tty=True,
                                               volumes=['/data'],
                                               name=str(request.user))
-                id = DockerClient.start(str(request.user),
+                DockerClient.start(str(request.user),
                                    binds={'/data': {'bind': os.path.join(TEMPLATE, str(request.user)), 'rw': False}})
-                DockerContainer(UserName=str(request.user),ContainerID=id['Id']).save()
+                DockerContainer(UserName=str(request.user),ContainerID=DockerClient.get('Id')).save()
             return render_to_response('index.html', {'user': request.user})
         else:
             return render_to_response('registration/login.html', {'user': request.user})
