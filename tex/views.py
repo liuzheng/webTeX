@@ -40,7 +40,7 @@ def index(request):
                                               name=str(request.user))
                 DockerClient.start(str(request.user),
                                    binds={'/data': {'bind': os.path.join(TEMPLATE, str(request.user)), 'rw': False}})
-                DockerContainer(UserName=str(request.user), ContainerID=DockerClient.get('Id')).save()
+                # DockerContainer(UserName=str(request.user), ContainerID=DockerClient.get('Id')).save()
             return render_to_response('index.html', {'user': request.user})
         else:
             return render_to_response('registration/login.html', {'user': request.user})
