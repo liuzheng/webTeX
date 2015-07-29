@@ -16,19 +16,29 @@ import time
 from django.contrib.auth import logout, login
 from django.contrib.auth.models import User
 from django.contrib import auth
+from tex.models import UserTexJob, DockerContainer
 
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, parentdir)
+import docker
+
+DockerClient = docker.Client(base_url='unix://var/run/docker.sock', timeout=10)
 
 
 # Create your views here.
 def index(request):
-    if request.method=='GET':
+    if request.method == 'GET':
+        print request.user
         if request.user.is_authenticated():
-            return render_to_response('index.html')
+            DockerClient.create_container(image="liuzheng712/texlive:2014", stdin_open=True, tty=True,
+                                          volumes=['/data'],
+                                          name=request.user)
+            DockerClient.start(container=request.user,
+                               binds={'/data': {'bind': os.path.join(TEMPLATE, request.user), 'rw': False}})
+            return render_to_response('index.html', {'user': request.user})
         else:
-            return render_to_response('registration/login.html')
-    elif request.method=='POST':
+            return render_to_response('registration/login.html', {'user': request.user})
+    elif request.method == 'POST':
         post = simplejson.loads(request.body)
         username = post.get('username', '')
         password = post.get('password', '')
@@ -39,15 +49,22 @@ def index(request):
         else:
             return HttpResponse('0')
 
+
 # @csrf_exempt
 def MakeTexFile(request):
+    # 通过create_container方法创建容器，指定"yorko/webserver:v1"镜像名称，使用supervisord接管进程服务，挂载主宿机/data作为数据卷，容器监听80与22端口，容器的名称为webserver11
     post = simplejson.loads(request.body)
     csrfmiddlewaretoken = request.COOKIES.get('csrftoken', None)
     timestamp = str(int(time.mktime(time.localtime())))
     if post.get('texfile', False):
-        ff = open(os.path.join(TEMPLATE, csrfmiddlewaretoken + '-' + timestamp + '.tex'), 'w')
+        ff = open(os.path.join(TEMPLATE, request.user, csrfmiddlewaretoken + '-' + timestamp + '.tex'), 'w')
         ff.write(post.get('texfile', None).encode('utf8'))
         ff.close()
+        s = DockerClient.exec_create(request.user,
+                                     'cd /data && latex ' + + csrfmiddlewaretoken + '-' + timestamp + '.tex',
+                                     stdout=True, stderr=True, tty=True)
+        d = DockerClient.exec_start(s['Id'])
+        print d
         return HttpResponse('1')
     else:
         return HttpResponse('0')
