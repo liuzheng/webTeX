@@ -39,7 +39,7 @@ def index(request):
                                               volumes=['/data'],
                                               name=str(request.user))
                 DockerClient.start(str(request.user),
-                                   binds={'/data': {'bind': os.path.join(TEMPLATE, request.user), 'rw': False}})
+                                   binds={'/data': {'bind': os.path.join(TEMPLATE, str(request.user)), 'rw': False}})
             return render_to_response('index.html', {'user': request.user})
         else:
             return render_to_response('registration/login.html', {'user': request.user})
